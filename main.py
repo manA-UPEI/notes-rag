@@ -30,9 +30,15 @@ def ingest():
 
     print(f"Loading documents from {NOTES_DIR} ...")
     documents = load_documents(NOTES_DIR)
+    if not documents:
+        print("No supported non-empty documents found in notes/.")
+        return
     print(f"Loaded {len(documents)} document(s).")
 
     chunks = chunk_documents(documents)
+    if not chunks:
+        print("No chunks produced (documents may be empty).")
+        return
     print(f"Split into {len(chunks)} chunk(s).")
 
     print("Embedding chunks (first run downloads the model, ~90MB) ...")
